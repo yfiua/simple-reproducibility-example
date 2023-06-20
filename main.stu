@@ -1,0 +1,36 @@
+#
+# Stu file for generating the paper from LaTeX.
+#
+@all: paper.pdf;
+
+paper.pdf:	paper.tex refs.bib @figs
+{
+    rm -rf *.aux *.lo? *.out *.bbl *.brf *.blg *.nl? *.ilg *.toc
+    pdflatex -shell-escape -file-line-error -halt-on-error paper.tex
+    bibtex paper
+    pdflatex -shell-escape -file-line-error -halt-on-error paper.tex
+    pdflatex -shell-escape -file-line-error -halt-on-error paper.tex
+}
+
+@figs: [dep.figs_static] [dep.figs_dynamic];
+
+>dep.figs_dynamic: gen-dep-dynamic.sh
+{
+    ./gen-dep-dynamic.sh
+}
+
+figs/dynamic_sigma\=$SIGMA.pdf: -p figs/ plot-dynamic.py
+{
+    python3 plot-dynamic.py $SIGMA figs/dynamic_sigma=$SIGMA.pdf
+}
+
+$DIR/:
+{
+    mkdir -p $DIR
+}
+
+@clear:
+{
+    rm -rf *.aux *.lo? *.out *.bbl *.brf *.blg *.nl? *.ilg *.toc
+    rm -rf paper.pdf dep.figs_dynamic figs/dynamic_*.pdf
+}

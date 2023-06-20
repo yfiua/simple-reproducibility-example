@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{blindtext}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{hyperref}
+
+\title{Simple reproducibity example}
+\author{Jun Sun}
+\date{June 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Pure text}
+\blindtext
+
+\section{Citations}
+Put citations in the \texttt{refs.bib} file.
+Insert your references~\cite{sun2020time, sun2018decay}.
+
+\section{Figures}
+\subsection{Static figures}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{figs/gesis-logo.png}
+  \caption{A static image, in this case, the GESIS logo.~\label{fig_static}}
+\end{figure}
+
+\subsection{Dynamic figures}
+\begin{figure}[ht]
+  \centering
+  \subfloat[$\sigma=0.1$]
+  {\includegraphics[width=0.5\linewidth]{figs/dynamic_sigma=0.1.pdf}}
+  \subfloat[$\sigma=5.0$]
+  {\includegraphics[width=0.5\linewidth]{figs/dynamic_sigma=5.0.pdf}}
+  \caption{Dynamic figures (you can add more).~\label{fig_dynamic}}
+\end{figure}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
